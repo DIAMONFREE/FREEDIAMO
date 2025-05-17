@@ -23,6 +23,7 @@
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
+      overflow: hidden;
     }
     .container {
       background: rgba(0, 0, 0, 0.7);
@@ -32,6 +33,8 @@
       max-width: 400px;
       width: 100%;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
     input, button {
       width: 100%;
@@ -63,6 +66,21 @@
     #game-id-section {
       display: none;
     }
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
   </style>
 </head>
 <body>
@@ -72,24 +90,25 @@
       <input type="text" id="username" placeholder="اسم المستخدم" />
       <input type="password" id="password" placeholder="كلمة المرور" />
       <button onclick="login()">تسجيل الدخول</button>
-    </div><div id="tasks-section" style="display: none;">
-  <div class="task" id="task1">
-    <span>متابعة المطور</span>
-    <button onclick="followDev()">اذهب</button>
+    </div>
+    <div id="tasks-section" style="display: none;">
+      <div class="task" id="task1">
+        <span>متابعة المطور</span>
+        <button onclick="followDev()">اذهب</button>
+      </div>
+      <div class="task" id="task2">
+        <span>مشاركة الموقع</span>
+        <button onclick="shareSite()">نسخ الرابط</button>
+      </div>
+    </div>
+    <div id="game-id-section">
+      <input type="text" id="gameId" placeholder="أدخل معرف اللاعب (ID)" />
+      <button onclick="submitId()">شحن</button>
+      <p id="error-message" style="color: red; white-space: pre-line;"></p>
+    </div>
   </div>
-  <div class="task" id="task2">
-    <span>مشاركة الموقع</span>
-    <button onclick="shareSite()">نسخ الرابط</button>
-  </div>
-</div>
 
-<div id="game-id-section">
-  <input type="text" id="gameId" placeholder="أدخل معرف اللاعب (ID)" />
-  <button onclick="submitId()">شحن</button>
-  <p id="error-message" style="color: red; white-space: pre-line;"></p>
-</div>
-
-  </div>  <script>
+  <script>
     let task1Done = false;
     let task2Done = false;
 
@@ -130,5 +149,23 @@
       }
       errorMsg.textContent = "خطأ\nرمز الخطأ XZ5690JH ارسله للمطور ليساعدك";
     }
-  </script></body>
+
+    // Snow effect
+    const snowContainer = document.body;
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      const size = Math.random() * 5 + 2;
+      snowflake.style.width = `${size}px`;
+      snowflake.style.height = `${size}px`;
+      snowflake.style.left = `${Math.random() * window.innerWidth}px`;
+      snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      snowflake.style.opacity = Math.random();
+      snowContainer.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }
+
+    setInterval(createSnowflake, 100);
+  </script>
+</body>
 </html>
