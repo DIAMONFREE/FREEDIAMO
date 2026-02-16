@@ -167,7 +167,7 @@
         </p>
 
         <div class="dl-stats">
-            <i class="fas fa-download"></i> عدد التحميلات: <span id="count">...</span>
+            <i class="fas fa-download"></i> عدد التحميلات الحقيقية: <span id="count">0</span>
         </div>
 
         <a href="https://apk.e-droid.net/apk/app3880411-u94qfg.apk?v=2" class="download-btn">
@@ -183,25 +183,26 @@
     </div>
 
     <script>
-        // إحصائيات تعتمد على المتصفح (IP-like behavior) باستخدام خدمة مجانية
-        const STORE_KEY = "vectos_official_counter_2026";
+        // إحصائيات تعتمد على المتصفح
+        const STORE_KEY = "vectos_real_counter_2026";
         
         async function loadDownloads() {
             const countEl = document.getElementById('count');
             try {
-                // نستخدم التخزين المحلي لمنع تكرار العد لنفس الشخص
-                const hasCounted = localStorage.getItem('v_user');
+                const hasCounted = localStorage.getItem('v_user_real');
                 let mode = hasCounted ? 'get' : 'hit';
                 
+                // جلب العدد الصافي من الـ API
                 const response = await fetch(`https://api.countapi.xyz/${mode}/${STORE_KEY}/downloads`);
                 const data = await response.json();
                 
-                if(!hasCounted) localStorage.setItem('v_user', 'true');
+                if(!hasCounted) localStorage.setItem('v_user_real', 'true');
                 
-                // عرض الرقم الحقيقي + 15400 (رقم تجميلي لبداية قوية)
-                countEl.innerText = ((data.value || 0) + 15400).toLocaleString();
+                // عرض القيمة الحقيقية فقط
+                countEl.innerText = (data.value || 0).toLocaleString();
             } catch (e) {
-                countEl.innerText = "15,400+";
+                // في حال تعطل الخدمة يظهر رقم 1 افتراضي (أو أي رقم بسيط تختاره)
+                countEl.innerText = "1";
             }
         }
         window.onload = loadDownloads;
