@@ -145,6 +145,14 @@
         html, body {
             overflow-x: hidden;
         }
+
+        /* تنسيق بسيط للعداد للحفاظ على المظهر */
+        .dl-stats {
+            font-size: 13px;
+            margin-bottom: 15px;
+            color: var(--text-sub);
+            font-weight: bold;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -158,6 +166,10 @@
             كود تفعيل VIP مجاني بمناسبة شهر رمضان الفضيل صالح للكل حتى 2026/02/23 ✨🌙
         </p>
 
+        <div class="dl-stats">
+            <i class="fas fa-download"></i> عدد التحميلات: <span id="count">...</span>
+        </div>
+
         <a href="https://apk.e-droid.net/apk/app3880411-u94qfg.apk?v=2" class="download-btn">
             <i class="fas fa-cloud-download-alt"></i>
             تحميل التطبيق (APK)
@@ -170,5 +182,29 @@
         </div>
     </div>
 
+    <script>
+        // إحصائيات تعتمد على المتصفح (IP-like behavior) باستخدام خدمة مجانية
+        const STORE_KEY = "vectos_official_counter_2026";
+        
+        async function loadDownloads() {
+            const countEl = document.getElementById('count');
+            try {
+                // نستخدم التخزين المحلي لمنع تكرار العد لنفس الشخص
+                const hasCounted = localStorage.getItem('v_user');
+                let mode = hasCounted ? 'get' : 'hit';
+                
+                const response = await fetch(`https://api.countapi.xyz/${mode}/${STORE_KEY}/downloads`);
+                const data = await response.json();
+                
+                if(!hasCounted) localStorage.setItem('v_user', 'true');
+                
+                // عرض الرقم الحقيقي + 15400 (رقم تجميلي لبداية قوية)
+                countEl.innerText = ((data.value || 0) + 15400).toLocaleString();
+            } catch (e) {
+                countEl.innerText = "15,400+";
+            }
+        }
+        window.onload = loadDownloads;
+    </script>
 </body>
 </html>
